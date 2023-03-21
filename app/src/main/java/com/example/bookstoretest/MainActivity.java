@@ -1,28 +1,32 @@
 package com.example.bookstoretest;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.StringTokenizer;
 
 public class MainActivity extends AppCompatActivity {
 
     //Declare UI elements
     EditText idEditText, titleEditText, isbnEditText, authorEditText, descriptionEditText, priceEditText;
-    TextView discountTextView;
     Button showToastButton;
     Button clearFieldsButton;
     Button loadInfoButton;
 
     //LAB 3 T1
-
-    // Why use constants? Because they are used to store key names for SharedPreferences.
+    //Why use constants? Because they are used to store key names for SharedPreferences.
     //They are also used to save and restore the book data.
     //Constants are good for re-usability, readability and maintainability.
     public static final String TITLE_KEY = "bookTitle-key";
@@ -44,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
     private String author;
     private String description;
     private String price;
-    private String gstPrice;
 
 
     @Override
@@ -61,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
         priceEditText = findViewById(R.id.priceEditText);
         showToastButton = findViewById(R.id.showToastButton);
         clearFieldsButton = findViewById(R.id.clearFieldsButton);
-        discountTextView = findViewById(R.id.discountTextView);
         loadInfoButton = findViewById(R.id.loadInfoButton);
 
         //Automatically load attributes from last book
@@ -77,6 +79,19 @@ public class MainActivity extends AppCompatActivity {
                 updateViews();
             }
         });
+
+        /* Request permissions to access SMS */
+        ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.SEND_SMS, android.Manifest.permission.RECEIVE_SMS, Manifest.permission.READ_SMS}, 0);
+        /* Create and instantiate the local broadcast receiver
+           This class listens to messages come from class SMSReceiver
+         */
+        MyBroadCastReceiver myBroadCastReceiver = new MyBroadCastReceiver();
+
+        /*
+         * Register the broadcast handler with the intent filter that is declared in
+         * class SMSReceiver @line 11
+         * */
+        registerReceiver(myBroadCastReceiver, new IntentFilter(SMSReceiver.SMS_FILTER));
     }
 
 
@@ -104,18 +119,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    //Lab 2 Extra Task - Apply 10% discount to price
-    public void applyDiscount(View view) {
-        int originalPrice = Integer.parseInt(priceEditText.getText().toString());
-        int priceDifference = (originalPrice * 10) / 100;
-        int discountedPrice = originalPrice + priceDifference;
-        price = String.valueOf(discountedPrice);
-        gstPrice = String.valueOf(discountedPrice);
-
-        discountTextView.setText("GST Price: " + "$" + (int) discountedPrice);
-        Toast.makeText(this, "Price updated in Shared Pref to: " + (int) discountedPrice, Toast.LENGTH_SHORT).show();
-    }
-
     //LAB 3 Task 1: Save and restore book title and ISBN when changing orientation
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -133,7 +136,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //LAB 3 Task 2: App must load previous book data
-
     public void saveBookData(){
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -167,11 +169,43 @@ public class MainActivity extends AppCompatActivity {
         authorEditText.setText(author);
         descriptionEditText.setText(description);
         isbnEditText.setText(isbn);
+        priceEditText.setText(price);
+    }
 
-        if (priceEditText.getText().length() == 0 ) {
+    class MyBroadCastReceiver extends BroadcastReceiver {
+
+        /*
+         * This method 'onReceive' will get executed every time class SMSReceive sends a broadcast
+         * */
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            /*
+             * Retrieve the message from the intent
+             * */
+            String msg = intent.getStringExtra(SMSReceiver.SMS_MSG_KEY);
+            /*
+             * String Tokenizer is used to parse the incoming message
+             * The protocol is to have the account holder name and account number separate by a semicolon
+             * */
+
+            StringTokenizer sT = new StringTokenizer(msg, ";");
+            String id = sT.nextToken();
+            String title = sT.nextToken();
+            String isbn = sT.nextToken();
+            String author = sT.nextToken();
+            String description = sT.nextToken();
+            String price = sT.nextToken();
+            /*
+             * Now, its time to update the UI
+             * */
+            titleEditText.setText(title);
+            idEditText.setText(id);
+            authorEditText.setText(author);
+            descriptionEditText.setText(description);
+            isbnEditText.setText(isbn);
             priceEditText.setText(price);
-        } else {
-            priceEditText.setText(gstPrice);
+
+
         }
     }
 }
