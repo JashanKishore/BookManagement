@@ -7,113 +7,128 @@
     tools:context=".MainActivity">
 
     <EditText
-        android:id="@+id/idEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="ID"
-        android:inputType="number"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
         android:id="@+id/titleEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="275dp"
+        android:layout_height="45dp"
         android:hint="Title"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/idEditText" />
-
-    <EditText
-        android:id="@+id/isbnEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="ISBN"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/titleEditText" />
-
-    <EditText
-        android:id="@+id/authorEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Author"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/isbnEditText" />
+        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        app:layout_constraintTop_toBottomOf="@id/idEditText"
+        app:layout_constraintBottom_toTopOf="@id/isbnEditText"/>
 
     <EditText
         android:id="@+id/descriptionEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="275dp"
+        android:layout_height="45dp"
         android:hint="Description"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/authorEditText" />
+        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        app:layout_constraintTop_toBottomOf="@id/authorEditText"
+        app:layout_constraintBottom_toTopOf="@id/descriptionEditText"/>
+
+    <EditText
+        android:id="@+id/idEditText"
+        android:layout_width="275dp"
+        android:layout_height="45dp"
+        android:hint="ID"
+        android:inputType="number"
+        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        app:layout_constraintTop_toTopOf="@+id/guideline6"
+        app:layout_constraintBottom_toTopOf="@id/titleEditText"/>
 
     <EditText
         android:id="@+id/priceEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="275dp"
+        android:layout_height="45dp"
         android:hint="Price"
         android:inputType="numberDecimal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        tools:layout_editor_absoluteY="319dp"
         app:layout_constraintTop_toBottomOf="@id/descriptionEditText" />
+    <EditText
+        android:id="@+id/authorEditText"
+        android:layout_width="275dp"
+        android:layout_height="45dp"
+        android:hint="Author"
+        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        tools:layout_editor_absoluteY="203dp"
+        app:layout_constraintTop_toBottomOf="@id/isbnEditText"
+        app:layout_constraintBottom_toTopOf="@id/descriptionEditText" />
 
-    <Button
-        android:id="@+id/showToastButton"
-        android:layout_width="170dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="120dp"
-        android:onClick="showToast"
-        android:text="Save book"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/priceEditText" />
-
-    <Button
-        android:id="@+id/clearFieldsButton"
-        android:layout_width="170dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="120dp"
-        android:onClick="clearFields"
-        android:text="Clear Fields"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/showToastButton" />
-
-    <Button
-        android:id="@+id/discountButton"
-        android:layout_width="170dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="120dp"
-        android:onClick="applyDiscount"
-        android:text="Apply 10% GST"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/clearFieldsButton" />
-
-    <TextView
-        android:id="@+id/discountTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="140dp"
-        android:text="Discounted price: 00"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loadInfoButton" />
+    <EditText
+        android:id="@+id/isbnEditText"
+        android:layout_width="275dp"
+        android:layout_height="45dp"
+        android:hint="ISBN"
+        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        app:layout_constraintTop_toBottomOf="@id/titleEditText"
+        app:layout_constraintBottom_toTopOf="@id/authorEditText" />
 
     <Button
         android:id="@+id/loadInfoButton"
         android:layout_width="170dp"
         android:layout_height="50dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="120dp"
         android:text="Load info"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/discountButton" />
+        app:layout_constraintBottom_toTopOf="@+id/guideline5"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toBottomOf="@id/clearFieldsButton"/>
+
+    <Button
+        android:id="@+id/showToastButton"
+        android:layout_width="170dp"
+        android:layout_height="50dp"
+        android:onClick="showToast"
+        android:text="Save book"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintBottom_toTopOf="@id/clearFieldsButton"
+        app:layout_constraintTop_toBottomOf="@id/priceEditText" />
+    <Button
+        android:id="@+id/clearFieldsButton"
+        android:layout_width="170dp"
+        android:layout_height="50dp"
+        android:onClick="clearFields"
+        android:text="Clear Fields"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintBottom_toTopOf="@id/loadInfoButton"
+        app:layout_constraintTop_toBottomOf="@id/showToastButton"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.17" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.29" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="top" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="top" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.9" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.05" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
