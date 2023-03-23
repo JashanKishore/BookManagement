@@ -22,7 +22,7 @@
         android:hint="Description"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
         app:layout_constraintTop_toBottomOf="@id/authorEditText"
-        app:layout_constraintBottom_toTopOf="@id/descriptionEditText"/>
+        app:layout_constraintBottom_toTopOf="@id/priceEditText"/>
 
     <EditText
         android:id="@+id/idEditText"
@@ -41,8 +41,19 @@
         android:hint="Price"
         android:inputType="numberDecimal"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
-        tools:layout_editor_absoluteY="319dp"
-        app:layout_constraintTop_toBottomOf="@id/descriptionEditText" />
+        app:layout_constraintTop_toBottomOf="@id/descriptionEditText"
+        app:layout_constraintBottom_toTopOf="@id/pagesEditText"/>
+
+    <EditText
+        android:id="@+id/pagesEditText"
+        android:layout_width="275dp"
+        android:layout_height="45dp"
+        android:hint="Number of pages"
+        android:inputType="numberDecimal"
+        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        app:layout_constraintTop_toBottomOf="@id/priceEditText"
+        app:layout_constraintBottom_toTopOf="@id/showToastButton"/>
+
     <EditText
         android:id="@+id/authorEditText"
         android:layout_width="275dp"
@@ -79,7 +90,7 @@
         android:text="Save book"
         app:layout_constraintStart_toStartOf="@+id/guideline4"
         app:layout_constraintBottom_toTopOf="@id/clearFieldsButton"
-        app:layout_constraintTop_toBottomOf="@id/priceEditText" />
+        app:layout_constraintTop_toBottomOf="@id/pagesEditText" />
     <Button
         android:id="@+id/clearFieldsButton"
         android:layout_width="170dp"

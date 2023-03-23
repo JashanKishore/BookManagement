@@ -20,7 +20,7 @@ import java.util.StringTokenizer;
 public class MainActivity extends AppCompatActivity {
 
     //Declare UI elements
-    EditText idEditText, titleEditText, isbnEditText, authorEditText, descriptionEditText, priceEditText;
+    EditText idEditText, titleEditText, isbnEditText, authorEditText, descriptionEditText, priceEditText, pagesEditText;
     Button showToastButton;
     Button clearFieldsButton;
     Button loadInfoButton;
@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
         showToastButton = findViewById(R.id.showToastButton);
         clearFieldsButton = findViewById(R.id.clearFieldsButton);
         loadInfoButton = findViewById(R.id.loadInfoButton);
+        pagesEditText = findViewById(R.id.pagesEditText);
 
         //Automatically load attributes from last book
         if(savedInstanceState == null || savedInstanceState.isEmpty()){
@@ -80,18 +81,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        /* Request permissions to access SMS */
+        ///Get SMS permission
         ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.SEND_SMS, android.Manifest.permission.RECEIVE_SMS, Manifest.permission.READ_SMS}, 0);
-        /* Create and instantiate the local broadcast receiver
-           This class listens to messages come from class SMSReceiver
-         */
-        MyBroadCastReceiver myBroadCastReceiver = new MyBroadCastReceiver();
-
-        /*
-         * Register the broadcast handler with the intent filter that is declared in
-         * class SMSReceiver @line 11
-         * */
-        registerReceiver(myBroadCastReceiver, new IntentFilter(SMSReceiver.SMS_FILTER));
+        //instantiate broadcast receiver
+        //This class listens to messages from SMSReceiver
+        broadcastReceiver broadcastReceiver = new broadcastReceiver();
+         //Register handler with intent filter declared in SMS receiver class
+        registerReceiver(broadcastReceiver, new IntentFilter(SMSReceiver.SMS_FILTER));
     }
 
 
@@ -116,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
         descriptionEditText.setText("");
         priceEditText.setText("");
         authorEditText.setText("");
+        pagesEditText.setText("");
     }
 
 
@@ -172,40 +169,31 @@ public class MainActivity extends AppCompatActivity {
         priceEditText.setText(price);
     }
 
-    class MyBroadCastReceiver extends BroadcastReceiver {
-
-        /*
-         * This method 'onReceive' will get executed every time class SMSReceive sends a broadcast
-         * */
+    class broadcastReceiver extends BroadcastReceiver {
+         //onReceive executed every time SMSReceiver sends broadcast
         @Override
         public void onReceive(Context context, Intent intent) {
-            /*
-             * Retrieve the message from the intent
-             * */
+            //Get message from intent
             String msg = intent.getStringExtra(SMSReceiver.SMS_MSG_KEY);
-            /*
-             * String Tokenizer is used to parse the incoming message
-             * The protocol is to have the account holder name and account number separate by a semicolon
-             * */
 
-            StringTokenizer sT = new StringTokenizer(msg, ";");
-            String id = sT.nextToken();
-            String title = sT.nextToken();
-            String isbn = sT.nextToken();
-            String author = sT.nextToken();
-            String description = sT.nextToken();
-            String price = sT.nextToken();
-            /*
-             * Now, its time to update the UI
-             * */
-            titleEditText.setText(title);
-            idEditText.setText(id);
-            authorEditText.setText(author);
-            descriptionEditText.setText(description);
-            isbnEditText.setText(isbn);
-            priceEditText.setText(price);
+            //Tokenizer used to parse sms message
+            StringTokenizer sT = new StringTokenizer(msg, "|");
+            String msgId = sT.nextToken();
+            String msgTitle = sT.nextToken();
+            String msgIsbn = sT.nextToken();
+            String msgAuthor = sT.nextToken();
+            String msgDescription = sT.nextToken();
+            String msgPrice = sT.nextToken();
+            String msgPages = sT.nextToken();
 
-
+            //Update UI with parsed message 
+            titleEditText.setText(msgTitle);
+            idEditText.setText(msgId);
+            authorEditText.setText(msgAuthor);
+            descriptionEditText.setText(msgDescription);
+            isbnEditText.setText(msgIsbn);
+            priceEditText.setText(msgPrice);
+            pagesEditText.setText(msgPages);
         }
     }
 }
