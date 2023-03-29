@@ -2,6 +2,7 @@ package com.example.bookstoretest;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.Manifest;
 import android.content.BroadcastReceiver;
@@ -15,25 +16,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.material.navigation.NavigationView;
+
 import java.util.StringTokenizer;
 
 public class MainActivity extends AppCompatActivity {
 
-    //Declare UI elements
     EditText idEditText, titleEditText, isbnEditText, authorEditText, descriptionEditText, priceEditText, pagesEditText;
     Button showToastButton;
     Button clearFieldsButton;
     Button loadInfoButton;
 
-    //LAB 3 T1
-    //Why use constants? Because they are used to store key names for SharedPreferences.
-    //They are also used to save and restore the book data.
-    //Constants are good for re-usability, readability and maintainability.
     public static final String TITLE_KEY = "bookTitle-key";
     public static final String ISBN_KEY = "isbn-key";
-
     public static final String SHARED_PREFS = "shared-prefs";
-
     public static final String ID = "id";
     public static final String TITLE = "title";
     public static final String ISBN = "isbn";
@@ -41,13 +37,15 @@ public class MainActivity extends AppCompatActivity {
     public static final String DESCRIPTION = "description";
     public static final String PRICE = "price";
 
-
     private String id;
     private String title;
     private String isbn;
     private String author;
     private String description;
     private String price;
+
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
 
 
     @Override
