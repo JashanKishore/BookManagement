@@ -45,14 +45,14 @@ public class MainActivity extends AppCompatActivity {
     public static final String ISBN = "isbn";
     public static final String AUTHOR = "author";
     public static final String DESCRIPTION = "description";
-   // public static final String PRICE = "price";
+    public static final String PRICE = "price";
 
     private String id;
     private String title;
     private String isbn;
     private String author;
     private String description;
-    //private String price;
+    private String price;
 
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
@@ -134,8 +134,8 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addBookTitleToList();
-                Toast.makeText(MainActivity.this, "Added book title.", Toast.LENGTH_SHORT).show();
+                saveBookData();
+                Toast.makeText(MainActivity.this, "Book data saved.", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -229,9 +229,9 @@ public class MainActivity extends AppCompatActivity {
         editor.putString(TITLE, titleEditText.getText().toString());
         editor.putString(ID, idEditText.getText().toString());
         editor.putString(AUTHOR, authorEditText.getText().toString());
-        editor.putString(DESCRIPTION, titleEditText.getText().toString());
+        editor.putString(DESCRIPTION, descriptionEditText.getText().toString());
         editor.putString(ISBN, isbnEditText.getText().toString());
-        //editor.putString(PRICE, priceEditText.getText().toString());
+        editor.putString(PRICE, priceEditText.getText().toString());
 
         editor.apply();
     }
@@ -244,7 +244,9 @@ public class MainActivity extends AppCompatActivity {
         isbn = sharedPreferences.getString(ISBN, "");
         author = sharedPreferences.getString(AUTHOR, "");
         description = sharedPreferences.getString(DESCRIPTION, "");
-        //price = sharedPreferences.getString(PRICE, "");
+        price = sharedPreferences.getString(PRICE, "");
+        updateViews();
+
     }
 
 
@@ -254,7 +256,7 @@ public class MainActivity extends AppCompatActivity {
         authorEditText.setText(author);
         descriptionEditText.setText(description);
         isbnEditText.setText(isbn);
-        //priceEditText.setText(price);
+        priceEditText.setText(price);
     }
 
     class broadcastReceiver extends BroadcastReceiver {
