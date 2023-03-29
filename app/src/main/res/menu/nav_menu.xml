@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/navOption1"
-        android:title="Nav option 1" />
+        android:id="@+id/addBookOption"
+        android:title="Add book" />
 
     <item
-        android:id="@+id/navOption2"
-        android:title="Nav option 2" />
+        android:id="@+id/removeLastBookOption"
+        android:title="Remove last book" />
 
+    <item
+        android:id="@+id/clearAllBooksOption"
+        android:title="Remove all books" />
 </menu>

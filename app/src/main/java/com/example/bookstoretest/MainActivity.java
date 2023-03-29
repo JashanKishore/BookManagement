@@ -14,22 +14,28 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 
+import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 public class MainActivity extends AppCompatActivity {
 
     EditText idEditText, titleEditText, isbnEditText, authorEditText, descriptionEditText, priceEditText, pagesEditText;
-    Button showToastButton;
-    Button clearFieldsButton;
-    Button loadInfoButton;
+    //Button showToastButton;
+    //Button clearFieldsButton;
+    //Button loadInfoButton;
 
     public static final String TITLE_KEY = "bookTitle-key";
     public static final String ISBN_KEY = "isbn-key";
@@ -39,18 +45,22 @@ public class MainActivity extends AppCompatActivity {
     public static final String ISBN = "isbn";
     public static final String AUTHOR = "author";
     public static final String DESCRIPTION = "description";
-    public static final String PRICE = "price";
+   // public static final String PRICE = "price";
 
     private String id;
     private String title;
     private String isbn;
     private String author;
     private String description;
-    private String price;
+    //private String price;
 
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private Toolbar toolbar;
+
+    ArrayList<String> listItems = new ArrayList<>();
+    ArrayAdapter<String> adapter;
+    private ListView myListView;
 
 
     @Override
@@ -65,10 +75,10 @@ public class MainActivity extends AppCompatActivity {
         authorEditText = findViewById(R.id.authorEditText);
         descriptionEditText = findViewById(R.id.descriptionEditText);
         priceEditText = findViewById(R.id.priceEditText);
-        showToastButton = findViewById(R.id.showToastButton);
-        clearFieldsButton = findViewById(R.id.clearFieldsButton);
-        loadInfoButton = findViewById(R.id.loadInfoButton);
-        pagesEditText = findViewById(R.id.pagesEditText);
+        //showToastButton = findViewById(R.id.showToastButton);
+        //clearFieldsButton = findViewById(R.id.clearFieldsButton);
+        //loadInfoButton = findViewById(R.id.loadInfoButton);
+        //pagesEditText = findViewById(R.id.pagesEditText);
 
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
@@ -95,12 +105,20 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
-                if(id == R.id.navOption1){
-                    Toast.makeText(MainActivity.this, "First nav selected",
+                if(id == R.id.addBookOption){
+                    addBookTitleToList();
+
+                    Toast.makeText(MainActivity.this, "Book added",
                             Toast.LENGTH_SHORT).show();
                 }
-                else if (id == R.id.navOption2){
-                    Toast.makeText(MainActivity.this, "Second nav selected",
+                else if (id == R.id.removeLastBookOption){
+                    removeLastBookTitleFromList();
+                    Toast.makeText(MainActivity.this, "Last book removed",
+                            Toast.LENGTH_SHORT).show();
+                }
+                else if (id == R.id.clearAllBooksOption){
+                    clearBooksFromList();
+                    Toast.makeText(MainActivity.this, "All books cleared",
                             Toast.LENGTH_SHORT).show();
                 }
                 drawerLayout.closeDrawers();
@@ -108,6 +126,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        myListView = (ListView) findViewById(R.id.list_view);
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listItems);
+        myListView.setAdapter(adapter);
+
+        FloatingActionButton fab =  findViewById(R.id.floatingActionButton);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addBookTitleToList();
+                Toast.makeText(MainActivity.this, "Added book title.", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         //Automatically load attributes from last book
         if (savedInstanceState == null || savedInstanceState.isEmpty()) {
@@ -115,13 +145,13 @@ public class MainActivity extends AppCompatActivity {
             updateViews();
         }
 
-        loadInfoButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadBookData();
-                updateViews();
-            }
-        });
+//        loadInfoButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                loadBookData();
+//                updateViews();
+//            }
+//        });
 
         ///Get SMS permission
         ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.SEND_SMS, android.Manifest.permission.RECEIVE_SMS, Manifest.permission.READ_SMS}, 0);
@@ -133,29 +163,44 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
-    //Previously showToastButton is now used to also save book info for LAB 3
-    public void showToast(View view) {
-        //Convert to string because that is all we need. Otherwise type will be editable
-        String titleInfo = titleEditText.getText().toString();
-        //Pass to double since not working with string
-        double priceInfo = Double.parseDouble( priceEditText.getText().toString() );
-
-        String message = "Title: " + titleInfo + " | Price: " + priceInfo;
-        Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
-
-        // LAB 3
-        saveBookData();
+    public void addBookTitleToList(){
+        String title = titleEditText.getText().toString();
+        listItems.add(title);
+        adapter.notifyDataSetChanged();
+    }
+    public void removeLastBookTitleFromList(){
+        listItems.remove(listItems.size() -1);
+        adapter.notifyDataSetChanged();
     }
 
-    public void clearFields(View view) {
+    public void clearBooksFromList(){
+        listItems.clear();
+        adapter.notifyDataSetChanged();
+    }
+
+
+    //Previously showToastButton is now used to also save book info for LAB 3
+//    public void showToast(View view) {
+//        //Convert to string because that is all we need. Otherwise type will be editable
+//        String titleInfo = titleEditText.getText().toString();
+//        //Pass to double since not working with string
+//        double priceInfo = Double.parseDouble( priceEditText.getText().toString() );
+//
+//        String message = "Title: " + titleInfo + " | Price: " + priceInfo;
+//        Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
+//
+//        // LAB 3
+//        saveBookData();
+//    }
+
+    public void clearFields() {
         idEditText.setText("");
         isbnEditText.setText("");
         titleEditText.setText("");
         descriptionEditText.setText("");
         priceEditText.setText("");
         authorEditText.setText("");
-        pagesEditText.setText("");
+        //pagesEditText.setText("");
     }
 
 
@@ -186,7 +231,7 @@ public class MainActivity extends AppCompatActivity {
         editor.putString(AUTHOR, authorEditText.getText().toString());
         editor.putString(DESCRIPTION, titleEditText.getText().toString());
         editor.putString(ISBN, isbnEditText.getText().toString());
-        editor.putString(PRICE, priceEditText.getText().toString());
+        //editor.putString(PRICE, priceEditText.getText().toString());
 
         editor.apply();
     }
@@ -199,7 +244,7 @@ public class MainActivity extends AppCompatActivity {
         isbn = sharedPreferences.getString(ISBN, "");
         author = sharedPreferences.getString(AUTHOR, "");
         description = sharedPreferences.getString(DESCRIPTION, "");
-        price = sharedPreferences.getString(PRICE, "");
+        //price = sharedPreferences.getString(PRICE, "");
     }
 
 
@@ -209,7 +254,7 @@ public class MainActivity extends AppCompatActivity {
         authorEditText.setText(author);
         descriptionEditText.setText(description);
         isbnEditText.setText(isbn);
-        priceEditText.setText(price);
+        //priceEditText.setText(price);
     }
 
     class broadcastReceiver extends BroadcastReceiver {
@@ -227,7 +272,7 @@ public class MainActivity extends AppCompatActivity {
             String msgAuthor = sT.nextToken();
             String msgDescription = sT.nextToken();
             String msgPrice = sT.nextToken();
-            String msgPages = sT.nextToken();
+            //String msgPages = sT.nextToken();
 
             //Update UI with parsed message 
             titleEditText.setText(msgTitle);
@@ -236,7 +281,29 @@ public class MainActivity extends AppCompatActivity {
             descriptionEditText.setText(msgDescription);
             isbnEditText.setText(msgIsbn);
             priceEditText.setText(msgPrice);
-            pagesEditText.setText(msgPages);
+            //pagesEditText.setText(msgPages);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.options_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if(id == R.id.clearItemsOption){
+            Toast.makeText(MainActivity.this, "Items cleared",
+                    Toast.LENGTH_SHORT).show();
+            clearFields();
+        }
+        else if (id == R.id.loadItemsOption){
+            Toast.makeText(MainActivity.this, "Items loaded",
+                    Toast.LENGTH_SHORT).show();
+            loadBookData();
+        }
+        return true;
     }
 }

@@ -42,17 +42,7 @@
         android:inputType="numberDecimal"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
         app:layout_constraintTop_toBottomOf="@id/descriptionEditText"
-        app:layout_constraintBottom_toTopOf="@id/pagesEditText"/>
-
-    <EditText
-        android:id="@+id/pagesEditText"
-        android:layout_width="275dp"
-        android:layout_height="45dp"
-        android:hint="Number of pages"
-        android:inputType="numberDecimal"
-        app:layout_constraintStart_toStartOf="@+id/guideline3"
-        app:layout_constraintTop_toBottomOf="@id/priceEditText"
-        app:layout_constraintBottom_toTopOf="@id/showToastButton"/>
+        app:layout_constraintBottom_toTopOf="@id/list_view"/>
 
     <EditText
         android:id="@+id/authorEditText"
@@ -72,34 +62,6 @@
         app:layout_constraintStart_toStartOf="@+id/guideline3"
         app:layout_constraintTop_toBottomOf="@id/titleEditText"
         app:layout_constraintBottom_toTopOf="@id/authorEditText" />
-
-    <Button
-        android:id="@+id/loadInfoButton"
-        android:layout_width="170dp"
-        android:layout_height="50dp"
-        android:text="Load info"
-        app:layout_constraintBottom_toTopOf="@+id/guideline5"
-        app:layout_constraintStart_toStartOf="@+id/guideline4"
-        app:layout_constraintTop_toBottomOf="@id/clearFieldsButton"/>
-
-    <Button
-        android:id="@+id/showToastButton"
-        android:layout_width="170dp"
-        android:layout_height="50dp"
-        android:onClick="showToast"
-        android:text="Save book"
-        app:layout_constraintStart_toStartOf="@+id/guideline4"
-        app:layout_constraintBottom_toTopOf="@id/clearFieldsButton"
-        app:layout_constraintTop_toBottomOf="@id/pagesEditText" />
-    <Button
-        android:id="@+id/clearFieldsButton"
-        android:layout_width="170dp"
-        android:layout_height="50dp"
-        android:onClick="clearFields"
-        android:text="Clear Fields"
-        app:layout_constraintStart_toStartOf="@+id/guideline4"
-        app:layout_constraintBottom_toTopOf="@id/loadInfoButton"
-        app:layout_constraintTop_toBottomOf="@id/showToastButton"/>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3"
@@ -132,7 +94,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.9" />
+        app:layout_constraintGuide_percent="0.85" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline6"
@@ -140,6 +102,14 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.05" />
+
+    <ListView
+        android:id="@+id/list_view"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline5"
+        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        app:layout_constraintTop_toBottomOf="@id/priceEditText" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
