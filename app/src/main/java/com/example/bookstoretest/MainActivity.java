@@ -1,6 +1,9 @@
 package com.example.bookstoretest;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -11,6 +14,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -46,12 +50,13 @@ public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
+    private Toolbar toolbar;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.drawyer_layout_main);
 
         //Create reference to UI element i.e., Instantiate the UI elements in code
         idEditText = findViewById(R.id.idEditText);
@@ -65,8 +70,47 @@ public class MainActivity extends AppCompatActivity {
         loadInfoButton = findViewById(R.id.loadInfoButton);
         pagesEditText = findViewById(R.id.pagesEditText);
 
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
+        toolbar = findViewById(R.id.toolbar);
+
+        //1. Tell android not to use its toolbar
+        //2. Change the toolbar's theme
+        //3. Go to themes and change it to noActionBar
+        setSupportActionBar(toolbar);
+
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
+                R.string.nav_menu_open, R.string.nav_menu_close);
+        drawerLayout.addDrawerListener(toggle);
+        /*
+        Called to ensure that the toggle's visual appearance and behavior are in sync with the current
+        state of the navigation drawer. This is particularly important when the activity's state is
+        restored, for example, after a configuration change (like screen rotation), as it ensures
+        that the toggle displays the correct icon and state.
+         */
+        toggle.syncState();
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = item.getItemId();
+                if(id == R.id.navOption1){
+                    Toast.makeText(MainActivity.this, "First nav selected",
+                            Toast.LENGTH_SHORT).show();
+                }
+                else if (id == R.id.navOption2){
+                    Toast.makeText(MainActivity.this, "Second nav selected",
+                            Toast.LENGTH_SHORT).show();
+                }
+                drawerLayout.closeDrawers();
+                return true;
+            }
+        });
+
+
         //Automatically load attributes from last book
-        if(savedInstanceState == null || savedInstanceState.isEmpty()){
+        if (savedInstanceState == null || savedInstanceState.isEmpty()) {
             loadBookData();
             updateViews();
         }
@@ -84,8 +128,9 @@ public class MainActivity extends AppCompatActivity {
         //instantiate broadcast receiver
         //This class listens to messages from SMSReceiver
         broadcastReceiver broadcastReceiver = new broadcastReceiver();
-         //Register handler with intent filter declared in SMS receiver class
+        //Register handler with intent filter declared in SMS receiver class
         registerReceiver(broadcastReceiver, new IntentFilter(SMSReceiver.SMS_FILTER));
+
     }
 
 
