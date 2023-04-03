@@ -105,13 +105,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
-                if(id == R.id.addBookOption){
-                    addBookTitleToList();
-
-                    Toast.makeText(MainActivity.this, "Book added",
-                            Toast.LENGTH_SHORT).show();
-                }
-                else if (id == R.id.removeLastBookOption){
+                if (id == R.id.removeLastBookOption){
                     removeLastBookTitleFromList();
                     Toast.makeText(MainActivity.this, "Last book removed",
                             Toast.LENGTH_SHORT).show();
@@ -134,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                addBookTitleToList();
                 saveBookData();
                 Toast.makeText(MainActivity.this, "Book data saved.", Toast.LENGTH_SHORT).show();
             }

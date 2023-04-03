@@ -9,7 +9,7 @@
     <EditText
         android:id="@+id/titleEditText"
         android:layout_width="275dp"
-        android:layout_height="45dp"
+        android:layout_height="50dp"
         android:hint="Title"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
         app:layout_constraintTop_toBottomOf="@id/idEditText"
@@ -18,7 +18,7 @@
     <EditText
         android:id="@+id/descriptionEditText"
         android:layout_width="275dp"
-        android:layout_height="45dp"
+        android:layout_height="50dp"
         android:hint="Description"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
         app:layout_constraintTop_toBottomOf="@id/authorEditText"
@@ -27,7 +27,7 @@
     <EditText
         android:id="@+id/idEditText"
         android:layout_width="275dp"
-        android:layout_height="45dp"
+        android:layout_height="50dp"
         android:hint="ID"
         android:inputType="number"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
@@ -37,7 +37,7 @@
     <EditText
         android:id="@+id/priceEditText"
         android:layout_width="275dp"
-        android:layout_height="45dp"
+        android:layout_height="50dp"
         android:hint="Price"
         android:inputType="numberDecimal"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
@@ -47,7 +47,7 @@
     <EditText
         android:id="@+id/authorEditText"
         android:layout_width="275dp"
-        android:layout_height="45dp"
+        android:layout_height="50dp"
         android:hint="Author"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
         tools:layout_editor_absoluteY="203dp"
@@ -57,7 +57,7 @@
     <EditText
         android:id="@+id/isbnEditText"
         android:layout_width="275dp"
-        android:layout_height="45dp"
+        android:layout_height="50dp"
         android:hint="ISBN"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
         app:layout_constraintTop_toBottomOf="@id/titleEditText"
