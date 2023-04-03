@@ -121,6 +121,10 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "All books cleared",
                             Toast.LENGTH_SHORT).show();
                 }
+                else if (id == R.id.doublePriceOption){
+                    priceEditText.setText(Double.toString(Double.parseDouble(priceEditText.getText().toString()) * 2));
+                    Toast.makeText(MainActivity.this, "Price doubled.", Toast.LENGTH_SHORT).show();
+                }
                 drawerLayout.closeDrawers();
                 return true;
             }
@@ -293,8 +297,11 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+
+    //This method is called when an item in the options menu is selected
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        //This line of code gets the id of the item that was selected
         int id = item.getItemId();
         if(id == R.id.clearItemsOption){
             Toast.makeText(MainActivity.this, "Items cleared",
@@ -306,6 +313,16 @@ public class MainActivity extends AppCompatActivity {
                     Toast.LENGTH_SHORT).show();
             loadBookData();
         }
+        else if (id == R.id.applyDiscountOption){
+            //apply 50% discount to priceEditText
+            double price = Double.parseDouble(priceEditText.getText().toString());
+            price = price * 0.5;
+            priceEditText.setText(String.valueOf(price));
+
+            Toast.makeText(MainActivity.this, "50% discount applied",
+                    Toast.LENGTH_SHORT).show();
+        }
+        //If we don't return true, the menu item won't be highlighted
         return true;
     }
 }

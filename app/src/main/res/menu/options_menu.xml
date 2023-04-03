@@ -6,4 +6,7 @@
     <item
         android:id="@+id/loadItemsOption"
         android:title="Load items" />
+    <item
+        android:id="@+id/applyDiscountOption"
+        android:title="Apply 50% discount" />
 </menu>

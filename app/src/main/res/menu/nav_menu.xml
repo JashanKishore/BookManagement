@@ -11,4 +11,7 @@
     <item
         android:id="@+id/clearAllBooksOption"
         android:title="Remove all books" />
+     <item
+        android:id="@+id/doublePriceOption"
+        android:title="DoublePrice" />
 </menu>
