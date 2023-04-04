@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.content.BroadcastReceiver;
@@ -58,9 +60,14 @@ public class MainActivity extends AppCompatActivity {
     private NavigationView navigationView;
     private Toolbar toolbar;
 
-    ArrayList<String> listItems = new ArrayList<>();
-    ArrayAdapter<String> adapter;
-    private ListView myListView;
+    //ArrayList<String> listItems = new ArrayList<>();
+    //ArrayAdapter<String> adapter;
+    //private ListView myListView;
+
+    ArrayList<Book> books = new ArrayList<>();
+    RecyclerView recyclerView;
+    RecyclerView.LayoutManager layoutManager;
+    Week6Adapter adapter;
 
 
     @Override
@@ -84,6 +91,15 @@ public class MainActivity extends AppCompatActivity {
         navigationView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.toolbar);
 
+        recyclerView = findViewById(R.id.recycler_view);
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+
+        //Set the adapter
+        adapter = new Week6Adapter();
+        adapter.setData(books);
+        recyclerView.setAdapter(adapter);
+
         //1. Tell android not to use its toolbar
         //2. Change the toolbar's theme
         //3. Go to themes and change it to noActionBar
@@ -106,12 +122,12 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
                 if (id == R.id.removeLastBookOption){
-                    removeLastBookTitleFromList();
+                    removeLastBookFromRecyclerView();
                     Toast.makeText(MainActivity.this, "Last book removed",
                             Toast.LENGTH_SHORT).show();
                 }
                 else if (id == R.id.clearAllBooksOption){
-                    clearBooksFromList();
+                    clearBooksFromRecyclerView();
                     Toast.makeText(MainActivity.this, "All books cleared",
                             Toast.LENGTH_SHORT).show();
                 }
@@ -120,15 +136,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        myListView = (ListView) findViewById(R.id.list_view);
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listItems);
-        myListView.setAdapter(adapter);
+//        myListView = (ListView) findViewById(R.id.list_view);
+//        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listItems);
+//        myListView.setAdapter(adapter);
 
         FloatingActionButton fab =  findViewById(R.id.floatingActionButton);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addBookTitleToList();
+                //addBookTitleToList();
+                addBookToRecyclerView();
                 saveBookData();
                 Toast.makeText(MainActivity.this, "Book data saved.", Toast.LENGTH_SHORT).show();
             }
@@ -158,18 +175,39 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void addBookTitleToList(){
-        String title = titleEditText.getText().toString();
-        listItems.add(title);
-        adapter.notifyDataSetChanged();
-    }
-    public void removeLastBookTitleFromList(){
-        listItems.remove(listItems.size() -1);
+//    public void addBookTitleToList(){
+//        String title = titleEditText.getText().toString();
+//        listItems.add(title);
+//        adapter.notifyDataSetChanged();
+//    }
+//    public void removeLastBookTitleFromList(){
+//        listItems.remove(listItems.size() -1);
+//        adapter.notifyDataSetChanged();
+//    }
+//
+//    public void clearBooksFromList(){
+//        listItems.clear();
+//        adapter.notifyDataSetChanged();
+//    }
+
+    public void addBookToRecyclerView(){
+        String id_b = idEditText.getText().toString();
+        String title_b = titleEditText.getText().toString();
+        String isbn_b = isbnEditText.getText().toString();
+        String author_b = authorEditText.getText().toString();
+        String description_b = descriptionEditText.getText().toString();
+        String price_b = priceEditText.getText().toString();
+        books.add(new Book(id_b, title_b, isbn_b, author_b, description_b, price_b));
         adapter.notifyDataSetChanged();
     }
 
-    public void clearBooksFromList(){
-        listItems.clear();
+    public void removeLastBookFromRecyclerView(){
+        books.remove(books.size() -1);
+        adapter.notifyDataSetChanged();
+    }
+
+    public void clearBooksFromRecyclerView(){
+        books.clear();
         adapter.notifyDataSetChanged();
     }
 
