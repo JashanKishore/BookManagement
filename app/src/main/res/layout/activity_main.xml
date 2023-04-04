@@ -59,9 +59,9 @@
         android:layout_width="275dp"
         android:layout_height="50dp"
         android:hint="ISBN"
+        app:layout_constraintBottom_toTopOf="@id/authorEditText"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
-        app:layout_constraintTop_toBottomOf="@id/titleEditText"
-        app:layout_constraintBottom_toTopOf="@id/authorEditText" />
+        app:layout_constraintTop_toBottomOf="@id/titleEditText" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3"
@@ -69,13 +69,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.17" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.29" />
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/barrier2"

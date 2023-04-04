@@ -2,74 +2,73 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_view"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@android:color/holo_blue_dark"
+    app:cardCornerRadius="12dp">
 
-<androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="16dp">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/card_id_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="44dp"
-            android:layout_marginTop="32dp"
-            android:text="TextView"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+                        <TextView
+                            android:id="@+id/card_id_id"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="ID" />
 
-        <TextView
-            android:id="@+id/card_isbn_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="32dp"
-            android:text="TextView"
-            app:layout_constraintStart_toEndOf="@+id/card_id_id"
-            app:layout_constraintTop_toTopOf="parent" />
+                        <TextView
+                            android:id="@+id/card_isbn_id"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="ISB" />
 
-        <TextView
-            android:id="@+id/card_title_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="44dp"
-            android:layout_marginTop="32dp"
-            android:text="TextView"
-            app:layout_constraintStart_toEndOf="@id/card_isbn_id"
-            app:layout_constraintTop_toTopOf="parent" />
+                        <TextView
+                            android:id="@+id/card_title_id"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="TITLE" />
 
-        <TextView
-            android:id="@+id/card_author_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="44dp"
-            android:layout_marginTop="20dp"
-            android:text="TextView"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/card_id_id" />
+                </LinearLayout>
 
-        <TextView
-            android:id="@+id/card_description_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="44dp"
-            android:layout_marginTop="20dp"
-            android:text="TextView"
-            app:layout_constraintStart_toEndOf="@id/card_author_id"
-            app:layout_constraintTop_toBottomOf="@+id/card_isbn_id" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/card_price_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="44dp"
-            android:layout_marginTop="20dp"
-            android:text="TextView"
-            app:layout_constraintStart_toEndOf="@id/card_description_id"
-            app:layout_constraintTop_toBottomOf="@+id/card_title_id" />
+                        <TextView
+                            android:id="@+id/card_author_id"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="AUTHOR" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                        <TextView
+                            android:id="@+id/card_description_id"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="DESCRIPTION" />
+
+                        <TextView
+                            android:id="@+id/card_price_id"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="PRICE" />
+                </LinearLayout>
+
+        </LinearLayout>
 
 </androidx.cardview.widget.CardView>
