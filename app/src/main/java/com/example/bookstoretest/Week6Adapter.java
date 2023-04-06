@@ -33,6 +33,7 @@ public class Week6Adapter extends RecyclerView.Adapter<Week6Adapter.ViewHolder> 
         holder.authorEt.setText(db.get(position).getAuthor());
         holder.priceEt.setText(db.get(position).getPrice());
         holder.descriptionEt.setText(db.get(position).getDescription());
+        holder.lowercaseTitleEt.setText(db.get(position).getTitle().toLowerCase());
     }
 
     @Override
@@ -45,6 +46,7 @@ public class Week6Adapter extends RecyclerView.Adapter<Week6Adapter.ViewHolder> 
         TextView authorEt;
         TextView priceEt;
         TextView descriptionEt;
+        TextView lowercaseTitleEt;
 
         public ViewHolder(@NonNull View bookView) {
             super(bookView);
@@ -54,6 +56,7 @@ public class Week6Adapter extends RecyclerView.Adapter<Week6Adapter.ViewHolder> 
             authorEt = bookView.findViewById(R.id.card_author_id);
             priceEt = bookView.findViewById(R.id.card_price_id);
             descriptionEt = bookView.findViewById(R.id.card_description_id);
+            lowercaseTitleEt = bookView.findViewById(R.id.card_lowercase_title_id);
         }
     }
 }
