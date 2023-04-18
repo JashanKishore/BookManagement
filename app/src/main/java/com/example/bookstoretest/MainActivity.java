@@ -25,6 +25,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.bookstoretest.provider.BookViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
@@ -35,9 +36,6 @@ import java.util.StringTokenizer;
 public class MainActivity extends AppCompatActivity {
 
     EditText idEditText, titleEditText, isbnEditText, authorEditText, descriptionEditText, priceEditText, pagesEditText;
-    //Button showToastButton;
-    //Button clearFieldsButton;
-    //Button loadInfoButton;
 
     public static final String TITLE_KEY = "bookTitle-key";
     public static final String ISBN_KEY = "isbn-key";
@@ -60,14 +58,14 @@ public class MainActivity extends AppCompatActivity {
     private NavigationView navigationView;
     private Toolbar toolbar;
 
-    //ArrayList<String> listItems = new ArrayList<>();
-    //ArrayAdapter<String> adapter;
-    //private ListView myListView;
 
     ArrayList<Book> books = new ArrayList<>();
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
     Week6Adapter adapter;
+
+    private BookViewModel mBookViewModel;
+
 
 
     @Override
@@ -82,10 +80,6 @@ public class MainActivity extends AppCompatActivity {
         authorEditText = findViewById(R.id.authorEditText);
         descriptionEditText = findViewById(R.id.descriptionEditText);
         priceEditText = findViewById(R.id.priceEditText);
-        //showToastButton = findViewById(R.id.showToastButton);
-        //clearFieldsButton = findViewById(R.id.clearFieldsButton);
-        //loadInfoButton = findViewById(R.id.loadInfoButton);
-        //pagesEditText = findViewById(R.id.pagesEditText);
 
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
@@ -100,15 +94,12 @@ public class MainActivity extends AppCompatActivity {
         adapter.setData(books);
         recyclerView.setAdapter(adapter);
 
-        //1. Tell android not to use its toolbar
-        //2. Change the toolbar's theme
-        //3. Go to themes and change it to noActionBar
         setSupportActionBar(toolbar);
-
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
                 R.string.nav_menu_open, R.string.nav_menu_close);
         drawerLayout.addDrawerListener(toggle);
+
         /*
         Called to ensure that the toggle's visual appearance and behavior are in sync with the current
         state of the navigation drawer. This is particularly important when the activity's state is
@@ -121,12 +112,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
-                if (id == R.id.removeLastBookOption){
+                if (id == R.id.removeLastBookOption) {
                     removeLastBookFromRecyclerView();
                     Toast.makeText(MainActivity.this, "Last book removed",
                             Toast.LENGTH_SHORT).show();
-                }
-                else if (id == R.id.clearAllBooksOption){
+                } else if (id == R.id.clearAllBooksOption) {
                     clearBooksFromRecyclerView();
                     Toast.makeText(MainActivity.this, "All books cleared",
                             Toast.LENGTH_SHORT).show();
@@ -136,11 +126,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        myListView = (ListView) findViewById(R.id.list_view);
-//        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listItems);
-//        myListView.setAdapter(adapter);
-
-        FloatingActionButton fab =  findViewById(R.id.floatingActionButton);
+        FloatingActionButton fab = findViewById(R.id.floatingActionButton);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -157,14 +143,6 @@ public class MainActivity extends AppCompatActivity {
             updateViews();
         }
 
-//        loadInfoButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                loadBookData();
-//                updateViews();
-//            }
-//        });
-
         ///Get SMS permission
         ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.SEND_SMS, android.Manifest.permission.RECEIVE_SMS, Manifest.permission.READ_SMS}, 0);
         //instantiate broadcast receiver
@@ -175,22 +153,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-//    public void addBookTitleToList(){
-//        String title = titleEditText.getText().toString();
-//        listItems.add(title);
-//        adapter.notifyDataSetChanged();
-//    }
-//    public void removeLastBookTitleFromList(){
-//        listItems.remove(listItems.size() -1);
-//        adapter.notifyDataSetChanged();
-//    }
-//
-//    public void clearBooksFromList(){
-//        listItems.clear();
-//        adapter.notifyDataSetChanged();
-//    }
-
-    public void addBookToRecyclerView(){
+    public void addBookToRecyclerView() {
         String id_b = idEditText.getText().toString();
         String title_b = titleEditText.getText().toString();
         String isbn_b = isbnEditText.getText().toString();
@@ -201,30 +164,16 @@ public class MainActivity extends AppCompatActivity {
         adapter.notifyDataSetChanged();
     }
 
-    public void removeLastBookFromRecyclerView(){
-        books.remove(books.size() -1);
+    public void removeLastBookFromRecyclerView() {
+        books.remove(books.size() - 1);
         adapter.notifyDataSetChanged();
     }
 
-    public void clearBooksFromRecyclerView(){
+    public void clearBooksFromRecyclerView() {
         books.clear();
         adapter.notifyDataSetChanged();
     }
 
-
-    //Previously showToastButton is now used to also save book info for LAB 3
-//    public void showToast(View view) {
-//        //Convert to string because that is all we need. Otherwise type will be editable
-//        String titleInfo = titleEditText.getText().toString();
-//        //Pass to double since not working with string
-//        double priceInfo = Double.parseDouble( priceEditText.getText().toString() );
-//
-//        String message = "Title: " + titleInfo + " | Price: " + priceInfo;
-//        Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
-//
-//        // LAB 3
-//        saveBookData();
-//    }
 
     public void clearFields() {
         idEditText.setText("");
@@ -233,7 +182,6 @@ public class MainActivity extends AppCompatActivity {
         descriptionEditText.setText("");
         priceEditText.setText("");
         authorEditText.setText("");
-        //pagesEditText.setText("");
     }
 
 
@@ -254,7 +202,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //LAB 3 Task 2: App must load previous book data
-    public void saveBookData(){
+    public void saveBookData() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
@@ -293,7 +241,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     class broadcastReceiver extends BroadcastReceiver {
-         //onReceive executed every time SMSReceiver sends broadcast
+        //onReceive executed every time SMSReceiver sends broadcast
         @Override
         public void onReceive(Context context, Intent intent) {
             //Get message from intent
@@ -307,7 +255,6 @@ public class MainActivity extends AppCompatActivity {
             String msgAuthor = sT.nextToken();
             String msgDescription = sT.nextToken();
             String msgPrice = sT.nextToken();
-            //String msgPages = sT.nextToken();
 
             //Update UI with parsed message 
             titleEditText.setText(msgTitle);
@@ -329,12 +276,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        if(id == R.id.clearItemsOption){
+        if (id == R.id.clearItemsOption) {
             Toast.makeText(MainActivity.this, "Items cleared",
                     Toast.LENGTH_SHORT).show();
             clearFields();
-        }
-        else if (id == R.id.loadItemsOption){
+        } else if (id == R.id.loadItemsOption) {
             Toast.makeText(MainActivity.this, "Items loaded",
                     Toast.LENGTH_SHORT).show();
             loadBookData();
