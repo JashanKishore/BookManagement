@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,16 +20,12 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.bookstoretest.provider.BookViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.StringTokenizer;
@@ -62,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Book> books = new ArrayList<>();
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
-    Week6Adapter adapter;
+    RecyclerAdapter adapter;
 
     private BookViewModel mBookViewModel;
 
@@ -85,12 +82,18 @@ public class MainActivity extends AppCompatActivity {
         navigationView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.toolbar);
 
-        recyclerView = findViewById(R.id.recycler_view);
+        //Why doe we use a provider?
+        //The ViewModelProvider class provides a factory to create a ViewModel and retain it in a
+        //store of ViewModels.
+        mBookViewModel = new ViewModelProvider(this).get(BookViewModel.class);
+
+
+        recyclerView = findViewById(R.id.BookRecyclerView);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
         //Set the adapter
-        adapter = new Week6Adapter();
+        adapter = new RecyclerAdapter();
         adapter.setData(books);
         recyclerView.setAdapter(adapter);
 

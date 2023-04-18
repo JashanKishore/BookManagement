@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class Week6Adapter extends RecyclerView.Adapter<Week6Adapter.ViewHolder> {
+public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
     ArrayList<Book> db = new ArrayList<Book>();
 
     public void setData(ArrayList<Book> db) {
@@ -19,14 +19,14 @@ public class Week6Adapter extends RecyclerView.Adapter<Week6Adapter.ViewHolder> 
 
     @NonNull
     @Override
-    public Week6Adapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RecyclerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.book_layout, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull Week6Adapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerAdapter.ViewHolder holder, int position) {
         holder.idEt.setText(db.get(position).getId());
         holder.isbnEt.setText(db.get(position).getIsbn());
         holder.titleEt.setText(db.get(position).getTitle());

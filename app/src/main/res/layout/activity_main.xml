@@ -42,7 +42,7 @@
         android:inputType="numberDecimal"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
         app:layout_constraintTop_toBottomOf="@id/descriptionEditText"
-        app:layout_constraintBottom_toTopOf="@id/recycler_view"/>
+        app:layout_constraintBottom_toTopOf="@id/frag1"/>
 
     <EditText
         android:id="@+id/authorEditText"
@@ -87,7 +87,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.85" />
+        app:layout_constraintGuide_percent="0.95" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline6"
@@ -96,13 +96,13 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.05" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        android:layout_width="300dp"
-        android:layout_height="100dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline5"
-        app:layout_constraintStart_toStartOf="@+id/guideline3"
-        app:layout_constraintTop_toBottomOf="@id/priceEditText" />
-
+    <FrameLayout
+        android:id="@+id/frag1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/priceEditText"
+        app:layout_constraintBottom_toTopOf="@id/guideline5" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
