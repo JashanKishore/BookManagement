@@ -92,8 +92,11 @@ public class MainActivity extends AppCompatActivity {
         navigationView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.toolbar);
 
+        //1. Create a reference to the recycler view
         recyclerView = findViewById(R.id.recycler_view);
+        //2. Set the layout manager
         layoutManager = new LinearLayoutManager(this);
+        //3. Set the layout manager to the recycler view
         recyclerView.setLayoutManager(layoutManager);
 
         //Set the adapter
@@ -117,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
         that the toggle displays the correct icon and state.
          */
         toggle.syncState();
+
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -198,6 +202,7 @@ public class MainActivity extends AppCompatActivity {
         String author_b = authorEditText.getText().toString();
         String description_b = descriptionEditText.getText().toString();
         String price_b = priceEditText.getText().toString();
+
         books.add(new Book(id_b, title_b, isbn_b, author_b, description_b, price_b));
         adapter.notifyDataSetChanged();
     }

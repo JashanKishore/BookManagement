@@ -19,14 +19,20 @@ public class Week6Adapter extends RecyclerView.Adapter<Week6Adapter.ViewHolder> 
 
     @NonNull
     @Override
+    // This method is called when the RecyclerView needs a new ViewHolder of the given type to represent an item.
     public Week6Adapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        // Create a new view, which defines the UI of the list item
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.book_layout, parent, false);
+        // Create a ViewHolder for the view
         ViewHolder viewHolder = new ViewHolder(view);
+        // Return the ViewHolder
         return viewHolder;
     }
 
     @Override
+    // This method is called by the RecyclerView to display the data at the specified position.
     public void onBindViewHolder(@NonNull Week6Adapter.ViewHolder holder, int position) {
+        // Get element from your dataset at this position and replace the contents of the view with that element
         holder.idEt.setText(db.get(position).getId());
         holder.isbnEt.setText(db.get(position).getIsbn());
         holder.titleEt.setText(db.get(position).getTitle());
@@ -36,9 +42,14 @@ public class Week6Adapter extends RecyclerView.Adapter<Week6Adapter.ViewHolder> 
         holder.lowercaseTitleEt.setText(db.get(position).getTitle().toLowerCase());
     }
 
+    // This method returns the size of the data set.
     @Override
     public int getItemCount() {return db.size();}
 
+    //A ViewHolder object stores each of the component views inside the tag field of the Layout, so
+    // you can immediately access them without the need to look them up repeatedly.
+
+    //The ViewHolder class is a static inner class that holds references to the views in the layout.
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView idEt;
         TextView isbnEt;
@@ -48,6 +59,8 @@ public class Week6Adapter extends RecyclerView.Adapter<Week6Adapter.ViewHolder> 
         TextView descriptionEt;
         TextView lowercaseTitleEt;
 
+        // This method is called when the ViewHolder is created.
+        //The ViewHolder constructor takes the inflated view and uses findViewById() to get a reference to each subview.
         public ViewHolder(@NonNull View bookView) {
             super(bookView);
             idEt = bookView.findViewById(R.id.card_id_id);
