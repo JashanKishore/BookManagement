@@ -1,13 +1,13 @@
-package com.example.bookstoretest.provider;
+package bookstoretest.provider;
 
 import androidx.lifecycle.LiveData;
+import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 
-import com.example.bookstoretest.Book;
-
 import java.util.List;
 
+@Dao
 public interface BookDao {
 
     @Query("select * from books")
@@ -21,6 +21,9 @@ public interface BookDao {
 
     @Query("delete from books where bookTitle= :title")
     void deleteBook(String title);
+
+    @Query("DELETE FROM books WHERE bookId IN (SELECT bookId FROM books ORDER BY bookId DESC LIMIT 1)")
+    void deleteLastBook();
 
     @Query("delete FROM books")
     void deleteAllBooks();

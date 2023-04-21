@@ -1,12 +1,10 @@
-package com.example.bookstoretest.provider;
+package bookstoretest.provider;
 
 import android.content.Context;
 
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
-
-import com.example.bookstoretest.Book;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

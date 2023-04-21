@@ -1,4 +1,4 @@
-package com.example.bookstoretest;
+package bookstoretest.provider;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
@@ -10,7 +10,7 @@ public class Book {
     @PrimaryKey(autoGenerate = true)
     @NonNull
     @ColumnInfo(name = "bookId")
-    private String id;
+    private int id;
     @ColumnInfo(name = "bookTitle")
     private String title;
     @ColumnInfo(name = "bookAuthor")
@@ -22,8 +22,8 @@ public class Book {
     @ColumnInfo(name = "bookPrice")
     private String price;
 
-    public Book(String id , String title, String author, String description, String isbn, String price) {
-        this.id = id;
+    public Book(String title, String author, String description, String isbn, String price) {
+
         this.title = title;
         this.author = author;
         this.description = description;
@@ -31,11 +31,11 @@ public class Book {
         this.price = price;
     }
 
-    public void setId(@NonNull String id) {
+    public void setId(@NonNull int id) {
         this.id = id;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
@@ -58,4 +58,17 @@ public class Book {
     public String getPrice() {
         return price;
     }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", author='" + author + '\'' +
+                ", isbn='" + isbn + '\'' +
+                ", price=" + price +
+                ", description='" + description + '\'' +
+                '}';
+    }
+
 }

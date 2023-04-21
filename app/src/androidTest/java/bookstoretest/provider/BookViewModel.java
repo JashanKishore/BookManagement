@@ -1,10 +1,11 @@
-package com.example.bookstoretest.provider;
+package bookstoretest.provider;
 
 import android.app.Application;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import com.example.bookstoretest.Book;
+
 import java.util.List;
 
 public class BookViewModel extends AndroidViewModel {
@@ -24,7 +25,12 @@ public class BookViewModel extends AndroidViewModel {
     public void insert(Book book) {
         mRepository.insert(book);
     }
-    public void deleteAll(){
+
+    public void deleteLastBook(){
+        mRepository.deleteLastBook();
+    }
+
+    public void deleteAllBooks(){
         mRepository.deleteAll();
     }
 

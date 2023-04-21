@@ -1,14 +1,4 @@
-package com.example.bookstoretest;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+package bookstoretest;
 
 import android.Manifest;
 import android.content.BroadcastReceiver;
@@ -23,6 +13,18 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.bookstoretest.R;
+import com.example.bookstoretest.provider.Book;
 import com.example.bookstoretest.provider.BookViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -30,9 +32,10 @@ import com.google.android.material.navigation.NavigationView;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
+
 public class MainActivity extends AppCompatActivity {
 
-    EditText idEditText, titleEditText, isbnEditText, authorEditText, descriptionEditText, priceEditText, pagesEditText;
+    EditText idEditText, titleEditText, isbnEditText, authorEditText, descriptionEditText, priceEditText;
 
     public static final String TITLE_KEY = "bookTitle-key";
     public static final String ISBN_KEY = "isbn-key";
@@ -55,20 +58,29 @@ public class MainActivity extends AppCompatActivity {
     private NavigationView navigationView;
     private Toolbar toolbar;
 
-
     ArrayList<Book> books = new ArrayList<>();
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
     RecyclerAdapter adapter;
-
     private BookViewModel mBookViewModel;
-
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.drawyer_layout_main);
+
+        adapter = new RecyclerAdapter();
+        layoutManager = new LinearLayoutManager(this);
+        mBookViewModel = new ViewModelProvider(this).get(BookViewModel.class);
+        mBookViewModel.getAllBooks().observe(this, newData -> {
+            adapter.setBooks(newData);
+            adapter.notifyDataSetChanged();
+        });
+        getSupportFragmentManager().beginTransaction().replace(R.id.frag1,
+                    new Dashboard()).commit();
+
+        mBookViewModel = new ViewModelProvider(this).get(BookViewModel.class);
 
         //Create reference to UI element i.e., Instantiate the UI elements in code
         idEditText = findViewById(R.id.idEditText);
@@ -81,24 +93,7 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.toolbar);
-
-        //Why doe we use a provider?
-        //The ViewModelProvider class provides a factory to create a ViewModel and retain it in a
-        //store of ViewModels.
-        mBookViewModel = new ViewModelProvider(this).get(BookViewModel.class);
-
-
-        recyclerView = findViewById(R.id.BookRecyclerView);
-        layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-
-        //Set the adapter
-        adapter = new RecyclerAdapter();
-        adapter.setData(books);
-        recyclerView.setAdapter(adapter);
-
         setSupportActionBar(toolbar);
-
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
                 R.string.nav_menu_open, R.string.nav_menu_close);
         drawerLayout.addDrawerListener(toggle);
@@ -147,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         ///Get SMS permission
-        ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.SEND_SMS, android.Manifest.permission.RECEIVE_SMS, Manifest.permission.READ_SMS}, 0);
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS, Manifest.permission.RECEIVE_SMS, Manifest.permission.READ_SMS}, 0);
         //instantiate broadcast receiver
         //This class listens to messages from SMSReceiver
         broadcastReceiver broadcastReceiver = new broadcastReceiver();
@@ -157,24 +152,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void addBookToRecyclerView() {
-        String id_b = idEditText.getText().toString();
+        int id_b = Integer.parseInt(idEditText.getText().toString());
         String title_b = titleEditText.getText().toString();
         String isbn_b = isbnEditText.getText().toString();
         String author_b = authorEditText.getText().toString();
         String description_b = descriptionEditText.getText().toString();
         String price_b = priceEditText.getText().toString();
-        books.add(new Book(id_b, title_b, isbn_b, author_b, description_b, price_b));
-        adapter.notifyDataSetChanged();
+        Book newBook = new Book(title_b, isbn_b, author_b, description_b, price_b);
+        mBookViewModel.insert(newBook);
     }
 
     public void removeLastBookFromRecyclerView() {
-        books.remove(books.size() - 1);
-        adapter.notifyDataSetChanged();
+        mBookViewModel.deleteLastBook();
     }
 
     public void clearBooksFromRecyclerView() {
-        books.clear();
-        adapter.notifyDataSetChanged();
+        mBookViewModel.deleteAllBooks();
     }
 
 

@@ -1,11 +1,8 @@
-package com.example.bookstoretest.provider;
+package bookstoretest.provider;
 
 import android.app.Application;
-import android.content.Context;
 
 import androidx.lifecycle.LiveData;
-
-import com.example.bookstoretest.Book;
 
 import java.util.List;
 
@@ -33,13 +30,18 @@ public class BookRepository {
         return mAllBooks;
     }
 
-    void insert(Book book) {
+    public void insert(Book book) {
         BookDatabase.databaseWriteExecutor.execute(() -> mBookDao.addBook(book));
     }
 
-    void deleteAll() {
+    public void deleteLastBook() {
+        BookDatabase.databaseWriteExecutor.execute(() -> mBookDao.deleteLastBook());
+    }
+
+    public void deleteAll() {
         BookDatabase.databaseWriteExecutor.execute(() -> {
             mBookDao.deleteAllBooks();
         });
     }
+
 }
